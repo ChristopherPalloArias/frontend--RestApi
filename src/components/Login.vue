@@ -1,58 +1,57 @@
 <template>
   <div class="login">
-    <h3>Login</h3>
-    <form @submit.prevent="handleSubmit">
+    <h2>Login</h2>
+    <form @submit.prevent="login">
       <div>
         <label for="username">Username:</label>
-        <input type="text" v-model="username" required>
+        <input type="text" v-model="username" required />
       </div>
       <div>
         <label for="password">Password:</label>
-        <input type="password" v-model="password" required>
+        <input type="password" v-model="password" required />
       </div>
       <button type="submit">Login</button>
-      <div v-if="error" class="error">{{ error }}</div>
     </form>
+    <p v-if="error">{{ error }}</p>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
-data() {
-  return {
-    username: '',
-    password: '',
-    error: ''
-  };
-},
-methods: {
-  async handleSubmit() {
-    try {
-      const response = await axios.post('https://backendrestapi-484g6.ondigitalocean.app/login', { 
-        username: this.username,
-        password: this.password
-      });
-      if (response.data.message === 'Login Successfully') {
-        this.$router.push('/dashboard');
-      } else {
-        this.error = 'Invalid username or password';
+  data() {
+    return {
+      username: '',
+      password: '',
+      error: null
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await fetch('https://backendrestapi-484g6.ondigitalocean.app/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: this.username,
+            password: this.password
+          })
+        });
+        if (!response.ok) {
+          throw new Error('Login failed');
+        }
+        const data = await response.json();
+        console.log(data);
+        // Handle successful login here
+      } catch (error) {
+        this.error = error.message;
       }
-    } catch (err) {
-      this.error = 'An error occurred. Please try again.';
     }
   }
-}
 };
 </script>
 
-<style>
-.login {
-max-width: 300px;
-margin: auto;
-}
-.error {
-color: red;
-}
+<style scoped>
+/* Agrega tus estilos aquí */
 </style>
