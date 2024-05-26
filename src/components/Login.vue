@@ -43,7 +43,8 @@ export default {
         }
         const data = await response.json();
         console.log(data);
-        // Manejar login exitoso aquí
+        // Guardar el estado de autenticación en localStorage
+        localStorage.setItem('authenticated', 'true');
         this.$router.push({ name: 'dashboard' });
       } catch (error) {
         this.error = error.message;
@@ -54,5 +55,5 @@ export default {
 </script>
 
 <style scoped>
-/* Agrega tus estilos aquí */
+  
 </style>

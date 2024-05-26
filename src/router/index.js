@@ -5,7 +5,7 @@ import Dashboard from '@/components/Dashboard.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -16,7 +16,24 @@ export default new Router({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: Dashboard
+      component: Dashboard,
+      meta: { requiresAuth: true }
     }
   ]
 });
+
+// Agregar un guardia global para verificar la autenticación
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    const authenticated = localStorage.getItem('authenticated');
+    if (authenticated) {
+      next();
+    } else {
+      next({ name: 'login' });
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;
