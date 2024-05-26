@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider npx vue-cli-service build",
     "lint": "vue-cli-service lint"
-  },
+  },  
   "dependencies": {
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
