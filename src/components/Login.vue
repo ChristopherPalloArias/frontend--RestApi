@@ -44,6 +44,7 @@ export default {
         const data = await response.json();
         console.log(data);
         // Handle successful login here
+        this.$router.push({ name: 'dashboard' });
       } catch (error) {
         this.error = error.message;
       }
