@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <h1>Bienvenido al Dashboard</h1>
+    <h1>Bienvenido al sistema</h1>
     <button @click="logout">Cerrar Sesión</button>
   </div>
 </template>
