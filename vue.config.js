@@ -9,6 +9,6 @@ module.exports = {
     },
     headers: { "Access-Control-Allow-Origin": "*" },
     disableHostCheck: true,
-    allowedHosts: 'all'
+    allowedHosts: ['.ondigitalocean.app']
   }
 };
