@@ -30,7 +30,7 @@ data() {
 methods: {
   async handleSubmit() {
     try {
-      const response = await axios.post('https://backendrestapi-484g6.ondigitalocean.app', {
+      const response = await axios.post('https://backendrestapi-484g6.ondigitalocean.app/login', { 
         username: this.username,
         password: this.password
       });
