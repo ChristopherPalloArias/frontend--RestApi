@@ -72,14 +72,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #f5f5f5;
 }
 
 .login {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: #f5f5f5;
+  height: 100%;
+  width: 100%;
 }
 
 .login-container {
