@@ -1,10 +1,10 @@
 <template>
   <div class="login">
     <form @submit.prevent="handleSubmit" class="login-form">
-      <h2>Iniciar Sesión</h2>
+      <h2>Login RestApi</h2>
       <input v-model="username" type="text" placeholder="Nombre de usuario" required autoComplete="username" />
       <input v-model="password" type="password" placeholder="Contraseña" required autoComplete="current-password" />
-      <button type="submit">Entrar</button>
+      <button type="submit">Login</button>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
     </form>
   </div>
