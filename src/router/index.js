@@ -22,16 +22,19 @@ const router = new Router({
   ]
 });
 
-// Agregar un guardia global para verificar la autenticación
+// Guardia global de navegación
 router.beforeEach((to, from, next) => {
+  const authenticated = localStorage.getItem('authenticated');
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    const authenticated = localStorage.getItem('authenticated');
-    if (authenticated) {
-      next();
-    } else {
+    // Si la ruta requiere autenticación y no está autenticado, redirige al login
+    if (!authenticated) {
       next({ name: 'login' });
+    } else {
+      next();
     }
   } else {
+    // Si la ruta no requiere autenticación, continúa
     next();
   }
 });

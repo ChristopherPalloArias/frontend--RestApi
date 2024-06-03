@@ -25,6 +25,9 @@ export default {
           password: this.password
         });
         if (response.data.message === 'Login Successfully') {
+          // Guardar estado de autenticación
+          localStorage.setItem('authenticated', true);
+          // Redirigir al dashboard
           this.$router.push('/dashboard');
         } else {
           alert('Login failed');
