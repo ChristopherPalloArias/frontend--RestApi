@@ -1,3 +1,6 @@
+<!-- Este componente es el punto de entrada principal de la aplicación Vue. 
+     Renderiza el componente que coincide con la ruta actual utilizando <router-view/> 
+     y aplica estilos globales. -->
 <template>
   <div id="app">
     <router-view/>

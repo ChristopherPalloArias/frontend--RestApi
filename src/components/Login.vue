@@ -11,37 +11,42 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'; // Importa la biblioteca axios para hacer solicitudes HTTP
 
 export default {
   name: 'Login',
   data() {
     return {
-      username: '',
-      password: '',
-      errorMessage: ''
+      username: '', // Almacena el nombre de usuario ingresado
+      password: '', // Almacena la contraseña ingresada
+      errorMessage: '' // Almacena mensajes de error para mostrar en la interfaz
     };
   },
   methods: {
+    // Método para manejar el envío del formulario de inicio de sesión
     async handleSubmit() {
       try {
+        // Realiza una solicitud POST al endpoint de login con los datos del usuario
         const response = await axios.post('/login', {
           username: this.username,
           password: this.password
         });
+        // Verifica la respuesta del servidor
         if (response.data.message === 'Login Successfully') {
-          // Guardar estado de autenticación
+          // Guardar estado de autenticación en localStorage
           localStorage.setItem('authenticated', 'true');
           console.log('Autenticación exitosa, redirigiendo a dashboard');
-          // Redirigir al dashboard
+          // Redirigir al componente Dashboard
           this.$router.push('/dashboard');
         } else {
+          // Muestra mensaje de error si la autenticación falla
           this.errorMessage = 'Login failed';
-          console.error('Login failed: ', response.data.message);
+          console.error('Login failed');
         }
       } catch (error) {
-        this.errorMessage = 'Login failed: ' + error.message;
-        console.error('Login failed: ', error.message);
+        // Manejo de errores en caso de fallo de la solicitud
+        this.errorMessage = 'Login failed';
+        console.error('Login failed');
       }
     }
   }
@@ -49,17 +54,20 @@ export default {
 </script>
 
 <style scoped>
+/* Reset de márgenes y padding, aplicando box-sizing */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Estilos generales para html y body */
 html, body {
   height: 100%;
   font-family: Arial, sans-serif;
 }
 
+/* Centrando el contenido */
 body {
   display: flex;
   justify-content: center;
@@ -67,6 +75,7 @@ body {
   background: #f5f5f5;
 }
 
+/* Contenedor principal de login */
 .login {
   display: flex;
   justify-content: center;
@@ -75,6 +84,7 @@ body {
   width: 100%;
 }
 
+/* Estilos del formulario de login */
 .login-form {
   background: #fff;
   padding: 2rem;
@@ -88,6 +98,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
+/* Estilos de los inputs del formulario */
 .login-form input {
   width: 100%;
   padding: 0.5rem;
@@ -96,6 +107,7 @@ body {
   border-radius: 5px;
 }
 
+/* Estilos del botón de login */
 .login-form button {
   padding: 0.5rem 1rem;
   background: #007bff;
@@ -109,6 +121,7 @@ body {
   background: #0056b3;
 }
 
+/* Estilos para mensajes de error */
 .error {
   color: red;
   margin-top: 1rem;
