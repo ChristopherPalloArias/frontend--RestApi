@@ -37,11 +37,11 @@ export default {
           this.$router.push('/dashboard');
         } else {
           this.errorMessage = 'Login failed';
-          console.error('Login failed: ', response.data.message);
+          console.error('Login failed');
         }
       } catch (error) {
-        this.errorMessage = 'Login failed: ' + error.message;
-        console.error('Login failed: ', error.message);
+        this.errorMessage = 'Login failed';
+        console.error('Login failed');
       }
     }
   }
