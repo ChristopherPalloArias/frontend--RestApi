@@ -2,8 +2,8 @@
   <div class="login">
     <form @submit.prevent="handleSubmit" class="login-form">
       <h2>Iniciar Sesión</h2>
-      <input v-model="username" type="text" placeholder="Nombre de usuario" required />
-      <input v-model="password" type="password" placeholder="Contraseña" required />
+      <input v-model="username" type="text" placeholder="Nombre de usuario" required autoComplete="username" />
+      <input v-model="password" type="password" placeholder="Contraseña" required autoComplete="current-password" />
       <button type="submit">Entrar</button>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
     </form>
@@ -37,11 +37,11 @@ export default {
           this.$router.push('/dashboard');
         } else {
           this.errorMessage = 'Login failed';
-          console.error('Login failed');
+          console.error('Login failed: ', response.data.message);
         }
       } catch (error) {
-        this.errorMessage = 'Login failed';
-        console.error('Login failed');
+        this.errorMessage = 'Login failed: ' + error.message;
+        console.error('Login failed: ', error.message);
       }
     }
   }
