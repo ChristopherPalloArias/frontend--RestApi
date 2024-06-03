@@ -5,6 +5,7 @@
       <input v-model="username" type="text" placeholder="Nombre de usuario" required />
       <input v-model="password" type="password" placeholder="Contraseña" required />
       <button type="submit">Entrar</button>
+      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
     </form>
   </div>
 </template>
@@ -17,7 +18,8 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      errorMessage: ''
     };
   },
   methods: {
@@ -34,10 +36,12 @@ export default {
           // Redirigir al dashboard
           this.$router.push('/dashboard');
         } else {
-          alert('Login failed');
+          this.errorMessage = 'Login failed';
+          console.error('Login failed: ', response.data.message);
         }
       } catch (error) {
-        alert('Login failed: ' + error.message);
+        this.errorMessage = 'Login failed: ' + error.message;
+        console.error('Login failed: ', error.message);
       }
     }
   }
@@ -103,5 +107,10 @@ body {
 
 .login-form button:hover {
   background: #0056b3;
+}
+
+.error {
+  color: red;
+  margin-top: 1rem;
 }
 </style>
