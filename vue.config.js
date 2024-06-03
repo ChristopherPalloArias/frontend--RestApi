@@ -2,7 +2,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'https://backendrestapi-484g6.ondigitalocean.app',
+        target: 'https://backend-restapi-g5luf.ondigitalocean.app',
         changeOrigin: true,
         pathRewrite: { '^/api': '' }
       }

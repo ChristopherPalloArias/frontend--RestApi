@@ -5,7 +5,7 @@ import axios from 'axios';
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = 'https://backendrestapi-484g6.ondigitalocean.app';
+axios.defaults.baseURL = 'https://backend-restapi-g5luf.ondigitalocean.app';
 
 new Vue({
   router,

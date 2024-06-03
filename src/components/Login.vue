@@ -1,134 +1,48 @@
-<template>
-  <div class="login">
-    <div class="login-container">
-      <h2>Login</h2>
-      <form @submit.prevent="login">
-        <div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" v-model="username" required />
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" v-model="password" required />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <p v-if="error">{{ error }}</p>
-    </div>
-  </div>
-</template>
+function Login({ onLogin }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION);
 
-<script>
-export default {
-  data() {
-    return {
-      username: '',
-      password: '',
-      error: null
-    };
-  },
-  methods: {
-    async login() {
-      try {
-        const response = await fetch('https://backendrestapi-484g6.ondigitalocean.app/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            username: this.username,
-            password: this.password
-          })
-        });
-        if (!response.ok) {
-          throw new Error('Login failed');
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const { data } = await login({
+        variables: {
+          username: username,
+          password: password
         }
-        const data = await response.json();
-        console.log(data);
-        // Guardar el estado de autenticación en localStorage
-        localStorage.setItem('authenticated', 'true');
-        this.$router.push({ name: 'dashboard' });
-      } catch (error) {
-        this.error = error.message;
+      });
+      if (data.login === "Login Successfully") {
+        onLogin();
+      } else {
+        throw new Error(data.login || "Login failed");
       }
+    } catch (e) {
+      // Showing detailed error message from GraphQL or default error
+      alert(`Login failed: ${e.message}`);
     }
-  }
-};
-</script>
+  };
 
-<style scoped>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {(error.message || "Please try again")}</p>;
 
-html, body {
-  height: 100%;
-  font-family: Arial, sans-serif;
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        value={username}
+        onChange={e => setUsername(e.target.value)}
+        type="text"
+        placeholder="Username"
+        required
+      />
+      <input
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        type="password"
+        placeholder="Password"
+        required
+      />
+      <button type="submit">Login</button>
+    </form>
+  );
 }
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f5f5f5;
-}
-
-.login {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-}
-
-.login-container {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 300px;
-}
-
-.login-container h2 {
-  margin-bottom: 1.5rem;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-  text-align: left;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-button {
-  width: 100%;
-  padding: 0.5rem;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-p {
-  color: red;
-  margin-top: 1rem;
-}
-</style>
